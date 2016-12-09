@@ -30,6 +30,29 @@
 #include "dataloader.hh"
 #include "gocup_data.hh"
 
+
+void DataLoader::load_roots_matrix(const char* matrixfile, MatrixVector& matrix)
+{
+    demands.clear();
+    LineIterator lineiter(matrixfile);
+    int linectr = 1;
+    while (lineiter.has_next()) {
+        char* line = lineiter.next();
+        int id, dist;
+        int ret = sscanf(line, "%d\t%d", &id, &dist);
+        //weight = 1; //Setto il peso a zero ignorando quello che leggo 
+        //printf("demand = %d\n", weight);
+        if (ret == EOF) {
+            break;
+        } else if (ret != 2) {
+            fprintf(stderr, "Error parsing file %s, line %d\n", matrixfile, linectr);
+            exit(1);
+        }
+        matrix.push_back(dist);
+        ++linectr;
+    }
+}
+
 void DataLoader::load_gocup_demands(const char* demandfile, DemandVector& demands)
 {
     demands.clear();
@@ -38,8 +61,9 @@ void DataLoader::load_gocup_demands(const char* demandfile, DemandVector& demand
     while (lineiter.has_next()) {
         char* line = lineiter.next();
         int id, weight;
-        int ret = sscanf(line, "%d\t%d", &id, &weight); 
-        // printf("demand = %d\n", weight);
+        int ret = sscanf(line, "%d\t%d", &id, &weight);
+        //weight = 1; //Setto il peso a zero ignorando quello che leggo 
+        //printf("demand = %d\n", weight);
         if (ret == EOF) {
             break;
         } else if (ret != 2) {
