@@ -33,18 +33,18 @@
 
 void DataLoader::load_roots_matrix(const char* matrixfile, MatrixVector& matrix)
 {
-    demands.clear();
+    matrix.clear();
     LineIterator lineiter(matrixfile);
     int linectr = 1;
     while (lineiter.has_next()) {
         char* line = lineiter.next();
-        int id, dist;
-        int ret = sscanf(line, "%d\t%d", &id, &dist);
+        int dist;
+        int ret = sscanf(line, "%d", &dist);
         //weight = 1; //Setto il peso a zero ignorando quello che leggo 
         //printf("demand = %d\n", weight);
         if (ret == EOF) {
             break;
-        } else if (ret != 2) {
+        } else if (ret != 1) {
             fprintf(stderr, "Error parsing file %s, line %d\n", matrixfile, linectr);
             exit(1);
         }
@@ -130,12 +130,15 @@ DistanceMatrix* DataLoader::load_internal_gocup(int probnum)
     return distmatrix;
 }
 
-DistanceMatrix* DataLoader::load_external_gocup(const char* demandfile, const char* coordfile) 
+DistanceMatrix* DataLoader::load_external_gocup(const char* demandfile, const char* coordfile, const char* matrixfile) 
 {
     DemandVector demands;
     CoordVector coords;
+    MatrixVector matrix;
     load_gocup_demands(demandfile, demands);
     load_gocup_coords(coordfile, coords);
+    load_roots_matrix(matrixfile, matrix);
+
     printf("demands size= %u, coords size = %u\n", demands.size(), coords.size());
     if (demands.size() != coords.size()) {
         fprintf(stderr, "Fatal error: files have different number of lines\n"); 
@@ -146,9 +149,10 @@ DistanceMatrix* DataLoader::load_external_gocup(const char* demandfile, const ch
     for (int i = 0; i < sz; ++i) {
         // distmatrix->set(i, i, 0);
         for (int j = 0; j < sz; ++j) {
-            double dx = coords[i].first -  coords[j].first; 
-            double dy = coords[i].second - coords[j].second; 
-            int dist = static_cast<int>(floor(hypot(dx, dy)));
+            // double dx = coords[i].first -  coords[j].first; 
+            // double dy = coords[i].second - coords[j].second; 
+            // int dist = static_cast<int>(floor(hypot(dx, dy)));
+            int dist = matrix[i + j];
             distmatrix->set(i, j, dist * demands[i]);
             distmatrix->set(j, i, dist * demands[j]);
         }

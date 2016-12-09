@@ -30,12 +30,14 @@ class Options {
         int gocup_problem() const { return _gocup_problem; }
         const char *demands_file() const { return _demands_file; }
         const char *coordinates_file() const { return _coordinates_file; }
+        const char *matrix_file() const { return _matrix_file; }
 
     private:
         int _runs;
         int _medians;
         const char* _demands_file;
         const char* _coordinates_file;
+        const char* _matrix_file;
         int _gocup_problem;
         bool _quiet;
 };

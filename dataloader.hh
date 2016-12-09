@@ -29,17 +29,19 @@
 typedef std::vector<int> DemandVector;
 typedef std::pair<int, int> Point;
 typedef std::vector<Point> CoordVector;
+typedef std::vector<int> MatrixVector;
 
 class DataLoader {
     public:
         DataLoader() { ; }
         ~DataLoader() { ; }
         DistanceMatrix* load_internal_gocup(int probnum);
-        DistanceMatrix* load_external_gocup(const char* demandfile, const char* coordfile);
+        DistanceMatrix* load_external_gocup(const char* demandfile, const char* coordfile, const char* matrixfile);
 
     private:
         void load_gocup_demands(const char* demandfile, DemandVector& demands);
         void load_gocup_coords(const char* coordfile, CoordVector& coords);
+        void load_roots_matrix(const char* matrixfile, MatrixVector& matrix);
         DataLoader(const DataLoader&);
         DataLoader& operator=(const DataLoader&);
         

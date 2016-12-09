@@ -9,7 +9,7 @@ void Options::parse_args(int argc, char** argv) {
         exit(1);
     }
 
-    _demands_file = _coordinates_file = 0;
+    _demands_file = _coordinates_file = _matrix_file = 0;
     _gocup_problem = 0;
 
     int arg = 1;
@@ -29,7 +29,10 @@ void Options::parse_args(int argc, char** argv) {
             arg += 2; // advance for option + parameter
         } else if (strcmp(argv[arg], "-c") == 0) {
             _coordinates_file = argv[arg + 1];
-            arg += 2; // advance for option + parameter
+            arg += 2; // advance for option + 
+        } else if (strcmp(argv[arg], "-M") == 0) {
+            _matrix_file = argv[arg + 1];
+            arg +=2; //advance for option + parameter
         } else if (strcmp(argv[arg], "-m") == 0) {
             _medians = parse_numeric_option(arg, argc, argv);
             if (_medians <= 0) {
@@ -101,11 +104,12 @@ void Options::print_usage() {
     printf("For example, to solve problem 2:\n");
     printf("  pmedian 2\n");
     printf("\n");
-    printf("To solve an arbitrary problem use the options -d <demands> and -c <coords>:\n");
+    printf("To solve an arbitrary problem use the options -d <demands> and -c <coords> and -M <distanceMatrix>:\n");
     printf("  'demands' is a text file with the demands (weights) for each city (node).\n");
     printf("  'coords' is a text file with the coordinates for each city (node).\n");
+    printf("  'distanceMatrix' is a text file with the distance matrix.\n");
     printf("For example:\n");
-    printf("  pmedian -d demandas1.txt -c coordenadas1.txt\n");
+    printf("  pmedian -d demandas1.txt -c coordenadas1.txt -M matrix.txt\n");
     printf("See demandas[1..4].txt and coordenadas[1..4].txt for the format.\n");
     printf("\n");
     printf("Options: \n");

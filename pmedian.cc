@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
     if (opt.gocup_problem() >= 1 && opt.gocup_problem() <= 4) {
         distancematrix = dataloader.load_internal_gocup(opt.gocup_problem());
     } else {
-        distancematrix = dataloader.load_external_gocup(opt.demands_file(), opt.coordinates_file());
+        distancematrix = dataloader.load_external_gocup(opt.demands_file(), opt.coordinates_file(), opt.matrix_file());
     }
 
     // load problem

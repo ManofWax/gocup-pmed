@@ -1,6 +1,6 @@
 CXX=g++
-CXXFLAGS=-Wall -O2 -DNDEBUG -ffast-math -fomit-frame-pointer -fno-rtti
-#CXXFLAGS=-Wall -g 
+#CXXFLAGS=-Wall -O2 -DNDEBUG -ffast-math -fomit-frame-pointer -fno-rtti
+CXXFLAGS=-Wall -g 
 
 .PHONY: all
 all: pmedian
