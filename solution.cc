@@ -50,11 +50,10 @@ Solution& Solution::operator=(const Solution& soln)
 
 void Solution::print_to(FILE* fout)
 {
-    fprintf(fout, "[");
     std::vector<int> _medians_copy(_medians);
     std::sort(_medians_copy.begin(), _medians_copy.end());
     for (int m = 0; (size_t) m < _medians_copy.size(); ++m) {
         fprintf(fout, "%d ", _medians_copy[m] + 1);
     }
-    fprintf(fout, "], cost: %d", _cost);
+    fprintf(fout, "\n%d", _cost);
 }

@@ -64,11 +64,13 @@ int main(int argc, char** argv) {
 
     // print output
     Solution best_solution(pmsolver.best_solution());
-    printf("Best solution: ");
-    best_solution.print_to(stdout);
-    printf("\n");
-    printf("Wall clock time taken: %lu\n",(end_t - start_t));
-    printf("\n");
+    //printf("Best solution: ");
+    FILE *fp;
+    fp = fopen("Rpmediani.txt", "w+");
+    best_solution.print_to(fp);
+    // printf("\n");
+    // printf("Wall clock time taken: %lu\n",(end_t - start_t));
+    // printf("\n");
     delete pmp;
 
     return 0;
